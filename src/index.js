@@ -20,6 +20,15 @@ const types = document.getElementById("types");
 //    HINT --> Don't forget to invoke the function
 
 const fetchPokemons = () => {
+  fetch('https://pokeapi.co/api/v2/pokemon/')
+    .then((response) => {
+      return response.json()
+}).then((json) => {
+  json.results.forEach((pokemon) => {
+    //json.results is the array where all the names are stored
+      console.log(pokemon.name)
+  })
+})
   /*Fetch all pokemons here*/
 };
 
@@ -32,10 +41,19 @@ const fetchPokemons = () => {
 
 //    c) Log the names of all pokemons in the array
 
+const fetchPokemonsFirstName = () => {
+  fetch('https://pokeapi.co/api/v2/pokemon/')
+  .then((response) => {
+    return response.json()
+  }).then((json) => {
+    console.log(json.results[0].name)
+  })
+}
+
 // 3) You might know that there are more than 20 pokemons
 //    in the pokedex. Add a query parameter
 //    called "limit" to the URL, and set it to a number of your
-//    choice, like this: https://pokeapi.co/api/v2/pokemon/?limit=151
+//    choice, like this: https://pokeapi.co/api/v2/pokemon/?limit=88
 //    and pick a pokemon that you would like to continue
 //    working with. Copy the pokemon's URL.
 
@@ -45,9 +63,23 @@ const fetchPokemons = () => {
 //    function (change the function's name to fit your pokemon).
 //    Log the data in the console and see what you find.
 
-const fetchBulbasaurData = () => {
+const fetchJigglypuffData = () => {
+  fetch("https://pokeapi.co/api/v2/pokemon/39/")
   /*Fetch singular pokemon here*/
+  .then((response) => {
+    return response.json()
+  }).then((json) => {
+    console.log(json)
+    image.src = json.sprites.front_default;
+    name.innerHTML = json.name
+    weight.innerHTML =json.weight
+    height.innerHTML = json.height
+    types.innerHTML = json.types
+      .map(typeInfo => `<li>${typeInfo.type.name}</li>`)
+      .join("")
+  })
 };
+
 
 // 5) After familiarizing with the data, we will use the data
 //    to change our table. We will give you the image as a start.
@@ -65,3 +97,20 @@ const fetchBulbasaurData = () => {
 // ***BONUS***
 // Check out the API's documentation and try to fetch from another
 // endpoint! There are many - as you can see in the first link
+
+const fetchAnotherPokemon = () => {
+  fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+    .then((response) => {
+      return response.json()
+    }).then((json) => {
+      console.log(json)
+      name.innerHTML = json.name
+      weight.innerHTML = json.weight
+      height.innerHTML = json.height
+      types.innerHTML = json.types
+        .map(typeInfo => `<li>${typeInfo.type.name}</li>`)
+        .join("")
+    })
+}
+
+fetchAnotherPokemon()
